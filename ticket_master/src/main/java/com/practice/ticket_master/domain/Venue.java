@@ -13,5 +13,7 @@ public class Venue {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    private String Location;
+
+    @Column(name = "location", nullable = false)
+    private String location;
 }
