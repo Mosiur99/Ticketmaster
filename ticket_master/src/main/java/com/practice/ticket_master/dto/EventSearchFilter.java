@@ -1,4 +1,4 @@
-package com.practice.ticket_master_search_service.dto;
+package com.practice.ticket_master.dto;
 
 import lombok.Getter;
 import lombok.Setter;

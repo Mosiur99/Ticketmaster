@@ -3,14 +3,19 @@ package com.practice.ticket_master.service;
 import com.practice.ticket_master.domain.Event;
 import com.practice.ticket_master.domain.Performer;
 import com.practice.ticket_master.domain.Venue;
+import com.practice.ticket_master.dto.EventDTO;
+import com.practice.ticket_master.dto.EventSearchFilter;
 import com.practice.ticket_master.dto.request.EventCreateRequest;
 import com.practice.ticket_master.dto.response.ActionResponse;
+import com.practice.ticket_master.dto.response.EventSearchResponse;
 import com.practice.ticket_master.repository.EventRepository;
 import io.micrometer.common.util.StringUtils;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
 
@@ -28,6 +33,11 @@ public class EventServiceImpl implements EventService {
         this.venueService = venueService;
         this.eventRepository = eventRepository;
         this.performerService = performerService;
+    }
+
+    @Override
+    public Optional<Event> get(Long id) {
+        return eventRepository.findById(id);
     }
 
     @Override
@@ -92,5 +102,36 @@ public class EventServiceImpl implements EventService {
 
     private ActionResponse success() {
         return new ActionResponse(true, "Valid request");
+    }
+
+    @Override
+    public EventSearchResponse getEventSearchResponse(EventSearchFilter filter) {
+        if (Objects.isNull(filter)) {
+            return new EventSearchResponse();
+        }
+
+        List<EventDTO> eventDTOS = new ArrayList<>();
+        for (Long eventId : filter.getEventIds()) {
+            Optional<Event> event = get(eventId);
+            if (event.isEmpty()) {
+                continue;
+            }
+
+            eventDTOS.add(buildEventDTO(event.get()));
+        }
+
+        return buildEventSearchResponse(eventDTOS);
+    }
+
+    private EventSearchResponse buildEventSearchResponse(List<EventDTO> eventDTOS) {
+        EventSearchResponse response = new EventSearchResponse();
+        response.setEventDTOS(eventDTOS);
+        return response;
+    }
+
+    private EventDTO buildEventDTO(Event event) {
+        EventDTO eventDTO = new EventDTO();
+        eventDTO.setName(eventDTO.getName());
+        return eventDTO;
     }
 }
