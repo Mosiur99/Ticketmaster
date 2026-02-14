@@ -1,8 +1,10 @@
 package com.practice.ticket_master.controller;
 
 import com.practice.ticket_master.dto.EventDTO;
+import com.practice.ticket_master.dto.EventSearchFilter;
 import com.practice.ticket_master.dto.request.EventCreateRequest;
 import com.practice.ticket_master.dto.response.ActionResponse;
+import com.practice.ticket_master.dto.response.EventSearchResponse;
 import com.practice.ticket_master.service.EventService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -39,6 +41,16 @@ public class EventController {
     public ResponseEntity<ActionResponse> createEvent(@RequestBody EventCreateRequest request) {
         try {
             return ResponseEntity.ok(eventService.create(request));
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    @GetMapping
+    @RequestMapping("/search")
+    public ResponseEntity<EventSearchResponse> getEventSearchResponse(EventSearchFilter filter) {
+        try {
+            return ResponseEntity.ok(eventService.getEventSearchResponse(filter));
         } catch (Exception e) {
             throw new RuntimeException(e);
         }

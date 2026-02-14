@@ -25,7 +25,7 @@ public class SearchServiceImpl implements SearchService {
     public EventSearchResponse getEventSearchResponse(EventSearchFilter filter) {
         try {
             RestTemplate restTemplate = new RestTemplate();
-            String url = eventMainServiceBaseUrl + "/events";
+            String url = eventMainServiceBaseUrl + "/event/search";
             return restTemplate.getForObject(url, EventSearchResponse.class);
         } catch (Exception e) {
             LOGGER.error("Error: getEventSearchResponse.\nMessage:{}\nDetails:{}", e.getMessage(), e);
