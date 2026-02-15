@@ -131,7 +131,7 @@ public class EventServiceImpl implements EventService {
 
     private EventDTO buildEventDTO(Event event) {
         EventDTO eventDTO = new EventDTO();
-        eventDTO.setName(eventDTO.getName());
+        eventDTO.setName(event.getName());
         return eventDTO;
     }
 }
