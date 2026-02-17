@@ -1,10 +1,15 @@
 version: '3'
 services:
   elasticsearch:
-    image: elasticsearch:8.8.0
+    # Use Elasticsearch 9.x to match the Java client (9.2.3) that Spring Boot 4 pulls in.
+    # This avoids media_type_header_exception errors caused by REST API compatibility mismatch.
+    image: docker.elastic.co/elasticsearch/elasticsearch:9.2.3
     ports:
       - 9200:9200
       - 9300:9300
     environment:
       - discovery.type=single-node
       - xpack.security.enabled=false
+      - xpack.security.http.ssl.enabled=false
+      - xpack.security.transport.ssl.enabled=false
+      - ES_JAVA_OPTS=-Xms512m -Xmx512m
