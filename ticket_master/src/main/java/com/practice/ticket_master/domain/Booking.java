@@ -1,10 +1,11 @@
 package com.practice.ticket_master.domain;
 
+import com.practice.ticket_master.enumeration.BookingStatus;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 
-import java.util.List;
+import java.util.Date;
 
 @Entity
 @Getter
@@ -20,6 +21,17 @@ public class Booking {
     @JoinColumn(name = "account_id", nullable = false)
     private Account account;
 
-    @OneToMany(mappedBy = "booking")
-    private List<Ticket> tickets;
+    @ManyToOne
+    @JoinColumn(name = "event_id")
+    private Event event;
+
+    @Enumerated(EnumType.STRING)
+    @Column(name = "booking_status", nullable = false)
+    private BookingStatus bookingStatus;
+
+    @Column(name = "total_price", nullable = false)
+    private Double totalPrice;
+
+    @Column(name = "created_at", nullable = false)
+    private Date createdAt;
 }

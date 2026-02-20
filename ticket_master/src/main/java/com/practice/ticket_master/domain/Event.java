@@ -4,6 +4,8 @@ import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.util.Date;
+
 @Entity
 @Getter
 @Setter
@@ -27,4 +29,10 @@ public class Event {
 
     @Column(name = "description", nullable = false)
     private String description;
+
+    @Column(name = "event_time", nullable = false)
+    private Date eventTime;
+
+    @Column(name = "created_at", nullable = false)
+    private Date createdAt;
 }
